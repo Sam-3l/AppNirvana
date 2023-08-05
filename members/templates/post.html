@@ -1,0 +1,66 @@
+{% load static %}
+{% load to_and %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post</title>
+</head>
+<body>
+<img src="{% static 'menu.png' %}" alt="menu" onclick="menu()" height="40" width="40" style="position: fixed;z-index: 2;">
+<div onclick="every()">
+<div style="position: fixed;background-color: yellow;height: 64px;width: 1700px;z-index: 1;top: 0px;left: 0px;"><h2 style="position: fixed;top: 0px;left: 60px;">Hi {{ user.firstname }}</h2><br><br><br><hr>
+<a href="/userprofile/{{ user.id }}"><img id='pp' style="position: fixed;top: 5px;right: 5px;border-radius: 50%;" width="55px" height="55px" alt="profile picture"></a>
+</div><br><br><br>
+<h1>Post </h1>
+<form method="post" action="/postsave/{{ user.id }}">
+<h3>Write something down</h3>
+<input type="text" name="textpost">
+<p><input type="file" name="mediapost"></p>
+<p><input type="submit" value="POST"><button>Cancel</button></p>
+</form>
+</div>
+<div class="menu" id="menu">
+  <a href="/userprofile/{{ user.id }}"><p>View Profile</p></a><hr>
+  <p>weregg</p>
+</div> 
+</body>
+</html>
+<script>
+function every(){
+ document.getElementById('menu').style.display = 'none';
+}
+function menu(){
+  document.getElementById('menu').style.display = 'block';
+}
+const pp = document.getElementById('pp');
+if ('{{ pp|imgurl }}' == ''){
+    if ('{{ user.gender }}' == 'M'){
+    pp.src = "{% static 'male.png' %}";
+    }
+else{
+    pp.src = "{% static 'female.png' %}";
+     }}
+else{
+    pp.src = "{% static pp|imgurl %}";
+}
+</script>
+<style>
+.menu{
+    position: fixed;
+    background: black;
+    color: white;
+    top: 0px;
+    left: 0px;
+    width: 300px;
+    height: 1000px;
+    display: none;
+    z-index: 3;
+  }
+.menu a{
+  text-decoration: none;
+  color: white;
+}
+</style>

@@ -1,0 +1,45 @@
+*{
+    background: black;
+    color: rgb(107, 191, 240);
+}
+.rads{
+    font-size: xx-large;
+}
+form input{
+    padding: 6px;
+    width: 450px;
+    height: 50px;
+    border-radius: 26px;
+    text-align: center;
+    font-size: x-large;
+    border-color: white;
+}
+.rads input{
+    height: 22px;
+    width: 22px;
+}
+#chbox{
+    height: 28px;
+    width: 28px;
+}
+form p{
+    font-size: xx-large;
+    font-family: sans-serif;
+}
+#submit{
+    height: 60px;
+    width: 250px;
+    font-size: 25px;
+}
+#submit:hover{
+    background: rgba(9, 1, 39, 0.938);
+    transition: 3s;
+}
+::-webkit-calendar-picker-indicator{
+    background-color: blue;
+    height: large;
+    border-radius: 10px;
+}
+#comp{
+    font-size: smaller;
+}

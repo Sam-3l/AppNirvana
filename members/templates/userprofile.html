@@ -1,0 +1,78 @@
+{% load static %}
+{% load to_and %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome {{ user.firstname }}</title>
+</head>
+<body>
+<img id="cover"><img id="pp" alt="profile picture" height="200" width="200">
+<br><br><br><br><br>
+<h1>{{ user.firstname }}</h1>
+<section>{{ user.username }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <a href="/profiledit/{{ user.id }}"><button>Edit Profile</button></a><a href="/userstory/{{ user.id }}"><button>Add to story</button></a></section>
+    <hr>
+{% if bios == None %}
+<div id="bio"></div>
+{% else %}
+{% for bio in bios %}
+    <div id="bio">{{ bio }}</div>
+{% endfor %}
+{% endif %}  
+<script>
+new RegExp('(?=.*[^A-Za-z0-9])(?=.*[A-Za-z0-9])');
+    let bio = '{{ user.bio }}';
+    bio1 = bio.replace(/&#x27;/g, "").slice(1, -1);
+    bio2 = bio1.replace(/ /g, '').replace(/,/g, '');
+    if (new RegExp('(?=.*[^/(.+((\r?\n.+)*)/gm)])').test(bio2) == false || '{{ user.bio }}' == 'None'){
+        document.getElementById('bio').innerHTML = 'Hi, i\'m a x-hiter';
+    }
+</script>
+    <hr>
+    <b><h1>Profile:</h1></b>
+  <p>Fullname: {{ user.firstname }} {{ user.lastname }}</p>
+  <p>Email: {{ user.email }}</p>
+  <p>Band: {{ user.band }}</p>
+  <p>Date Of Birth: {{ user.dateOfBirth }}</p>
+  <p>Music Genre: {{ user.musicGenre }}</p>
+  <a href="/post/{{ user.id }}"><img src="{% static 'plus.png' %}" width="100" height="100" style="position: fixed;bottom: 60px;right: 60px;border-radius: 50%;"></a>
+</body>
+</html>
+<script>
+const pp = document.getElementById('pp');
+const cover = document.getElementById('cover');
+if ('{{ cover|imgurl }}' == ''){
+cover.src = "{% static 'default.png' %}";
+}
+else{
+    cover.src = "{% static cover|imgurl %}";
+}
+if ('{{ pp|imgurl }}' == ''){
+    if ('{{ user.gender }}' == 'M'){
+    pp.src = "{% static 'male.png' %}";
+    }
+else{
+    pp.src = "{% static 'female.png' %}";
+     }}
+else{
+    pp.src = "{% static pp|imgurl %}";
+}
+</script>
+<style>
+#pp{
+    border-radius: 50%;
+    border: 100px;
+    border-color: white;
+    position: absolute;
+    z-index: 2;
+    left: 15px;
+    top: 220px;
+}
+#cover{
+    width: 1573px;
+    height: 340px;
+}
+</style>

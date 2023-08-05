@@ -1,0 +1,102 @@
+{% load static %}
+{% load to_and %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit your profile</title>
+</head>
+<body>
+  <p><h2>Edit Your Profile</h2></p>
+<form method="post" action="/profilesave/{{ user.id }}" enctype="multipart/form-data">
+<img id="cover"><input type="file" style="display: none;" id="cover_inp" accept="image/*" onchange="replace()" name="cover"><label for="cover_inp" id="cover_icon">Edit</label>
+<img id="pp" alt="profile picture" height="200" width="200"><input type="file" style="display: none;" id="pp_inp" accept="image/*" onchange="replace()" name="pp"><label for="pp_inp" id="pp_icon">Edit</label>
+<br><br><br><br><br>
+<p>Bio: <textarea name="bio" id="bio" cols="30" rows="4" style="position: absolute;top: 495px;resize: none;"></textarea></p>
+<script>
+let bio_inp = document.getElementById('bio');
+let init_val = '';
+// {% for bio in bios %}                
+bio_inp.innerHTML = (init_val + '\n{{ bio }}').replace('\n', '');
+init_val += '\n{{ bio }}';
+// {% endfor %}
+</script>
+<br><br>
+{% if messages %}
+{% for message in messages %}
+{{ message }}
+{% endfor %}
+{% endif %}
+<p>Firstname: <input type="text" name="fname" value="{{ user.firstname }}"></p>
+<p>Lastname: <input type="text" name="lname" value="{{ user.lastname }}"></p>
+<p>Band: <input type="text" name="band" value="{{ user.band }}"></p>
+<p>Date Of Birth: <input type="date" name="dateOfBirth" value="{{ user.dateOfBirth|date:'Y-m-d' }}"></p>
+<p>Music Genre: <input type="text" name="musicGenre" value="{{ user.musicGenre }}"></p>
+<p><input type="submit" value="Save"><a href="/userprofile/{{ user.id }}"><input type="button" value="Cancel"></a></p>
+</form>
+</body>
+</html>
+<script>
+const pp = document.getElementById('pp');
+const cover = document.getElementById('cover');
+function replace(){
+    try{
+    let ppfls = document.getElementById("pp_inp").files[0];
+    ppic = URL.createObjectURL(ppfls);
+    pp.src = ppic;
+    }
+    finally{
+    let covrfls = document.getElementById("cover_inp").files[0];
+    covr = URL.createObjectURL(covrfls);
+    cover.src = covr;
+    }
+}
+if ('{{ cover|imgurl }}' == ''){
+cover.src = "{% static 'default.png' %}";
+}
+else{
+    cover.src = "{% static cover|imgurl %}";
+}
+if ('{{ pp|imgurl }}' == ''){
+    if ('{{ user.gender }}' == 'M'){
+    pp.src = "{% static 'male.png' %}";
+    }
+else{
+    pp.src = "{% static 'female.png' %}";
+     }}
+else{
+    pp.src = "{% static pp|imgurl %}";
+}
+</script>
+<style>
+    #cover_icon{
+        position: absolute;
+        top: 356px;
+        left: 1490px;
+        font-size: 50px;
+        color: white;
+    }
+    #pp_icon{
+        position: absolute;
+        color: black;
+        font-size: 35px;
+        top: 440px;
+        left: 130px;
+        z-index: 2;
+    }
+    #pp{
+        border-radius: 50%;
+        border: 100px;
+        border-color: white;
+        position: absolute;
+        z-index: 2;
+        left: 12px;
+        top: 280px;
+    }
+    #cover{
+        width: 1584px;
+        height: 340px;
+    }
+</style>

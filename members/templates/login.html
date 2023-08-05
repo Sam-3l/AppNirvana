@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet">
+    <title>login</title>
+</head>
+<body>
+    <h2>Login</h2>
+    <div class="loginput">
+    <p><label>Username or Email</label></p>
+    <input type="text" id="main">
+    <section id="mainmsg"></section>
+    <p><label >Password</label></p>
+    <input type="password" id="pass">
+    <section id="passmsg"></section>
+    </div>
+    <p><a id='login'><input type="button" value="Sign-in" onclick="sign()"></a></p>
+</body>
+<script>
+function sign(){
+let id;
+let pass;
+main = document.getElementById('main').value;
+passv = document.getElementById('pass').value;
+// {% for x in users %}
+    if (main == '{{ x.username }}' || main == '{{ x.email }}'){
+        id = '{{ x.id }}';
+        pass = '{{ x.password }}';
+    }
+// {% endfor %}
+    if (id == null){
+        document.getElementById('mainmsg').innerHTML = 'Invalid username or email';
+        document.getElementById('mainmsg').style.color = 'red';
+        document.getElementById('passmsg').innerHTML = '';
+    }
+    else if(pass != passv){
+        document.getElementById('passmsg').innerHTML = 'The password is incorrect';
+        document.getElementById('passmsg').style.color = 'red';
+        document.getElementById('mainmsg').innerHTML = '';
+    }
+    else{
+        document.getElementById('login').setAttribute('href', '/userhome/' + id)
+    }
+}
+</script>
+</html>
