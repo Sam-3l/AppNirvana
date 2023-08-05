@@ -1,8 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import *
+<<<<<<< HEAD
 # from south.db import db
 # from django.db.models.loading import cache
+=======
+from south.db import db
+from django.db.models.loading import cache
+>>>>>>> origin/master
 
 class artists(models.Model):
     firstname = models.CharField(max_length= 255, null = True)
@@ -27,5 +32,9 @@ post_fields = {
     'order':models.IntegerField(null=True),
     '__module__': 'members.models'
    }
+<<<<<<< HEAD
 
 # post = type('post', (models.Model,), post_fields)        
+=======
+post = type('post', (models.Model,), post_fields)        
+>>>>>>> origin/master
