@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Py WebPage</title>
+    <style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+.darkMode {
+    background-color: #000;
+}
+.loader {
+    background: yellow;
+    width: 8rem;
+    height: 8rem;
+    margin-inline: auto;
+    margin-block: 20rem 2rem;
+    border: 10px solid #8a2be2;
+    border-radius: 50%;
+    border-top: 0px;
+    border-left: 0px;
+    animation: animate 0.5s linear infinite;
+    animation-direction: alternate-reverse;
+}
+.py {
+    text-align: center;
+}
+.darkMode .py h1 {
+    color: #fff;
+}
+.py h1 {
+    font-family: "Agency FB";
+}
+.py a {
+    font-size: larger;
+    text-decoration: none;
+}
+button {
+    padding: 12px;
+    border: none;
+    background-color: aqua;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px 0 0 10px;
+}
+@keyframes animate {
+    100% {
+        transform: rotate(720deg);
+    }
+}
+    </style>
+</head>
+<body>
+    <button onclick="lightDark()">CHANGE COLOR SCHEME</button>
+    <div class="loader"></div>
+    <div class="py">
+        <h1>Welcome to Django!</h1>
+        <a href="#">Learn More</a>
+    </div>
+    <script>
+        const body = document.querySelector('body');
+        const lightDark = () => {
+            body.classList.toggle('darkMode');
+        }
+    </script>
+</body>
+</html>

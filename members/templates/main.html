@@ -1,0 +1,218 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gilde</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}"> 
+    <script src="{% static 'form.js' %}"></script>
+</head>
+<body style="text-align:center;">
+<span id="comp">xhitz.com</span>
+<h1>BECOME A XHITER TODAY!!</h1>
+    <form method="post" action="/user_inp/" onsubmit="return subForm(event)">
+             <p>Firstname:</p>
+            <div><input type="text" name="fname" placeholder="Enter your firstname" required></div>
+            <div>
+            <p>Lastname:</p>
+            <div><input type="text" name="lname" placeholder="Enter your lastname" required>
+        </div>
+        <p>Email:</p>
+       <div> <input type="email" name="email" placeholder="Enter your email address" required>
+    </div>    
+        <p>Band:</p>
+        <div><input type="text" name="band" placeholder="Enter your band" required>
+    </div>
+    <p>Date Of Birth:</p>
+ <div><input type="date" name="dateOfBirth" placeholder="Enter your date of birth" required>
+</div>
+    <p>Music genre(s):</p>
+    <div><input type="text" name="musicGenre" placeholder="Enter your music genre" required>
+</div>
+<p>Username:</p>
+<div><input type="text" name="uname" placeholder="Enter your username" oninput="uname_validt(event)" id="uname" required>
+<span style="position: relative; top: 0px; left: 40px;"></span>
+</div><div style="font-size: small;">
+<section id="chrMsg"></section>
+<section id="lenMsg"></section>
+<section id="uniqueMsg"></section>   
+</div>
+<p>Gender:</p>
+<div class="rads"><input type="radio" name="gender" value="M" required>Male <input type="radio" name="gender" value="F">Female </div>
+<p>Password:</p>
+<div><input type="password" name="password" id='pass' placeholder="Enter your password" oninput= "passcheck(event)" required >
+<span id='psvw' class="showPwd" style="position: relative; top: 0px; right: 40px;font-size: 15px;" onclick="tgglView()"></span>
+</div>
+<div style="font-size: small;">
+<section style="font-size: medium;"><span id="pass_strn"></span><span id="pstrn_val"></span></section>
+<section id="num_msg"></section>
+<section id="let_msg"></section>
+<section id="sc_msg"></section>
+<section id="len_msg"></section>
+<section id="case_msg"></section>
+</div>  
+<p>Confirm password:</p>
+<div><input type="password" name="repassword" placeholder="Confirm your password" id="cpass" oninput="pass_confirm(event)" required>
+<span id='rpsvw' class="showrPwd" style="position: relative; top: 0px; right: 40px;font-size: 15px;" onclick="tgglcView()"></span>
+<div style="font-size: small;" id="repwd_msg"></div>
+</div>
+<p><input type="checkbox" id='chbox' required>This means you are complying you our <a herf='/tc' style="text-decoration: underline;">terms and conditons</a></p>   
+<p><input type="submit" id="submit" value="Sign-up"></p>
+</form>
+<div style="font-size: large;">Already have an account? <a href="/login">Sign in</a></div>
+</body>
+<script>
+const psvw = document.getElementById('psvw');
+const rpsvw = document.getElementById('rpsvw');
+let pass_num = new RegExp('(?=.*[0-9])');
+let pass_spec = new RegExp('(?=.*[^A-Za-z0-9])');
+let pass_uc = new RegExp('(?=.*[A-Z])');
+let pass_lc = new RegExp('(?=.*[a-z])');
+let pass_len = new RegExp('(?=.{8,})');      
+let char = new RegExp('(?=.*[^A-Za-z0-9_])');
+let unq;
+function uname_validt(e){
+unq = true;
+let uname = e.target.value
+// {% for x in all_users %}
+    if (uname == '{{ x.username }}'){
+        unq = false;
+        document.getElementById('uniqueMsg').innerHTML = 'The username is not available';
+        document.getElementById('uniqueMsg').style.color='red';
+    }
+// {% endfor %}
+    if (unq != false){
+        document.getElementById('uniqueMsg').innerHTML = 'The username is available';
+        document.getElementById('uniqueMsg').style.color='green';
+    }
+    if (uname.length < 6 || uname.length > 15){
+        document.getElementById('lenMsg').innerHTML = 'Username must contain at least 6 characters and at most 15 characters';
+        document.getElementById('lenMsg').style.color='red';
+    }
+    else{
+        document.getElementById('lenMsg').innerHTML = '';
+    }
+    if (char.test(uname)){
+        document.getElementById('chrMsg').innerHTML = 'Username can only contain letters, numbers and underscores';
+        document.getElementById('chrMsg').style.color='red';
+    }
+    else{
+        document.getElementById('chrMsg').innerHTML = '';
+    }
+}
+function passcheck(x){
+    pass = x.target.value;
+    if (pass_num.test(pass) == false){
+        document.getElementById('num_msg').innerHTML = 'Password must contain numerical character(s)';
+        document.getElementById('num_msg').style.color='red';
+    } else{document.getElementById('num_msg').innerHTML = 'Password contains numerical character(s)';
+            document.getElementById('num_msg').style.color='green';}
+    if (pass_spec.test(pass) == false){
+        document.getElementById('sc_msg').innerHTML = 'Password must contain special character(s)';
+        document.getElementById('sc_msg').style.color='red';
+    } else{document.getElementById('sc_msg').innerHTML = 'Password contains special character(s)';
+    document.getElementById('sc_msg').style.color='green';}
+    if (pass_len.test(pass) == false){
+        document.getElementById('len_msg').innerHTML = 'Password must contain at least 8 characters';
+        document.getElementById('len_msg').style.color='red';
+    } else{document.getElementById('len_msg').innerHTML = 'Password must contains up to 8 characters';
+        document.getElementById('len_msg').style.color='green';}
+        document.getElementById('case_msg').style.color='rgba(196, 196, 8, 0.699)';
+if (pass_uc.test(pass) || pass_lc.test(pass)){
+        document.getElementById('let_msg').innerHTML = 'Password contains letter(s)';
+        document.getElementById('let_msg').style.color='green';
+        if (pass_uc.test(pass) == false){
+            document.getElementById('case_msg').innerHTML = 'Password does not contain any uppercase letter';
+        }
+        else if(pass_lc.test(pass) == false){
+            document.getElementById('case_msg').innerHTML = 'Password does not contain any lowercase letter';
+        }
+        else{
+            document.getElementById('case_msg').innerHTML = 'Password contains both uppercase and lowercase letters';
+            document.getElementById('case_msg').style.color='green';
+        }
+    }
+    else{
+        document.getElementById('let_msg').innerHTML = 'Password must contain letter(s)';
+        document.getElementById('case_msg').innerHTML = 'Using both uppercase and lowercase letters increase your password strength';
+        document.getElementById('let_msg').style.color='red';
+    }
+    document.getElementById('pass_strn').innerHTML = 'Password strength: ';
+    if(new RegExp ('(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.*[A-Z])(?=.*[a-z])(?=.{8,})').test(pass)){
+        document.getElementById('pstrn_val').innerHTML = 'Very strong password';
+        document.getElementById('pstrn_val').style.color = 'green';
+    }
+    else if (new RegExp('(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.*[A-Za-z])(?=.{8,})').test(pass)){
+        document.getElementById('pstrn_val').innerHTML = 'Strong password';
+        document.getElementById('pstrn_val').style.color = 'rgba(196, 196, 8, 0.699)';
+        }
+    else{
+        document.getElementById('pstrn_val').innerHTML = 'Password too weak';
+        document.getElementById('pstrn_val').style.color = 'red';
+    }
+    if (pass == ''){
+        try{document.getElementsByClassName('showPwd')[0].innerHTML = '';}catch(err){};
+        try{document.getElementsByClassName('showPwd not')[0].innerHTML = '';}catch(err){};
+    }
+    else{
+        try{document.getElementsByClassName('showPwd')[0].innerHTML = 'show';}catch(err){};
+        try{document.getElementsByClassName('showPwd not')[0].innerHTML = 'hide';}catch(err){};
+    }
+}
+function pass_confirm(e){
+    cpass = e.target.value;
+    pass = document.getElementById('pass').value;
+    if (cpass != pass){
+        document.getElementById('repwd_msg').innerHTML = 'Password does not match';
+        document.getElementById('repwd_msg').style.color = 'red';
+    }
+    else{
+        document.getElementById('repwd_msg').innerHTML = 'Password matches';
+        document.getElementById('repwd_msg').style.color = 'green';
+    }
+    if (cpass == ''){
+        try{document.getElementsByClassName('showrPwd')[0].innerHTML = '';}catch(err){};
+        try{document.getElementsByClassName('showrPwd not')[0].innerHTML = '';}catch(err){};
+    }
+    else{
+        try{document.getElementsByClassName('showrPwd')[0].innerHTML = 'show';}catch(err){};
+        try{document.getElementsByClassName('showrPwd not')[0].innerHTML = 'hide';}catch(err){};
+    }
+}
+function tgglView(){
+    psvw.classList.toggle('not');
+    try{document.getElementsByClassName('showPwd')[0].innerHTML = 'show';} catch(err){};
+    try{document.getElementsByClassName('showPwd not')[0].innerHTML = 'hide';}catch(err){};
+    if (document.getElementsByClassName('showPwd')[0].innerHTML == 'show'){
+        document.getElementById('pass').setAttribute('type', 'password')
+    }
+    else{
+        document.getElementById('pass').setAttribute('type', 'text')
+    }
+}
+function tgglcView(){
+    rpsvw.classList.toggle('not');
+    try{document.getElementsByClassName('showrPwd')[0].innerHTML = 'show';} catch(err){};
+    try{document.getElementsByClassName('showrPwd not')[0].innerHTML = 'hide';}catch(err){};
+    if (document.getElementsByClassName('showrPwd')[0].innerHTML == 'show'){
+        document.getElementById('cpass').setAttribute('type', 'password')
+    }
+    else{
+        document.getElementById('cpass').setAttribute('type', 'text')
+    }
+}
+function subForm(e){
+    let cpassw = document.getElementById('cpass').value; 
+    let passw = document.getElementById('pass').value;
+    let usname = document.getElementById('uname').value;
+    if (new RegExp('(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.*[A-Za-z])(?=.{8,})').test(passw) && cpassw == passw && usname.length >= 6 && usname.length <= 15 && unq != false && char.test(usname) == false) {
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+</script>
+</html>
